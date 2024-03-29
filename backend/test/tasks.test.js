@@ -13,8 +13,13 @@ describe("POST /tasks", () => {
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect(201);
-
-    expect(response.body).toHaveProperty("title").equal("Test Task");
+      .expect(201)
+      .then((response) => {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            title: "Test Task",
+          })
+        );
+      });
   });
 });
