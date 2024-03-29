@@ -14,4 +14,24 @@ router.post("/tasks", async (req, res) => {
   }
 });
 
+// Get all tasks
+router.get("/tasks", async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Delete all tasks
+router.delete("/tasks", async (req, res) => {
+  try {
+    await Task.deleteMany();
+    res.status(204).end();
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = router;
