@@ -11,6 +11,10 @@ const app = express();
 
 app.use(express.json());
 
+const taskRoutes = require("./routes/taskRoutes");
+
+app.use(taskRoutes);
+
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
