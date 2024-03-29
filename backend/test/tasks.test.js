@@ -178,3 +178,78 @@ describe("DELETE /tasks/:id", () => {
       });
   });
 });
+
+// Test the PUT route
+
+describe("PUT /tasks/:id", () => {
+    it("responds with 200", async () => {
+        // add a task to the database
+        const response = await request(app)
+        .post("/tasks")
+        .send({
+            title: "Test Task",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(201)
+        .then((response) => {
+            const taskId = response.body._id;
+            return taskId;
+        });
+    
+        // update the task by id
+        const response2 = await request(app)
+        .put(`/tasks/${response}`)
+        .send({
+            title: "Updated Task",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((response) => {
+            expect(response.body).toEqual(
+            expect.objectContaining({
+                title: "Updated Task",
+            })
+            );
+        });
+    });
+    
+    it("responds with 400 if the id is invalid", async () => {
+        // update a task by an invalid id
+        const response = await request(app)
+        .put(`/tasks/aaaa`)
+        .send({
+            title: "Updated Task",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .then((response) => {
+            expect(response.body).toEqual(
+            expect.objectContaining({
+                error: expect.any(String),
+            })
+            );
+        });
+    });
+    
+    it("responds with 404 if the task is not found", async () => {
+        // update a task by an id that does not exist
+        const response = await request(app)
+        .put(`/tasks/60e7c9b7d3f5e9f8b8b4e9e1`)
+        .send({
+            title: "Updated Task",
+        })
+        .set("Accept", "application/json")
+        .expect("Content-Type", /json/)
+        .expect(404)
+        .then((response) => {
+            expect(response.body).toEqual(
+            expect.objectContaining({
+                error: "Task not found",
+            })
+            );
+        });
+    });
+    });
