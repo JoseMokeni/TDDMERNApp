@@ -12,10 +12,23 @@ function App() {
       .then((res) => res.json())
       .then((data) => setTasks(data));
   }, []);
+
   return (
     <div class="container mx-auto">
       <Header />
-      <AddForm />
+      <AddForm
+        submit={(task) => {
+          fetch("http://localhost:5000/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+          })
+            .then((res) => res.json())
+            .then((data) => setTasks([...tasks, data]));
+        }}
+      />
       <TaskList tasks={tasks} />
     </div>
   );
