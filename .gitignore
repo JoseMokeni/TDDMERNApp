@@ -6,3 +6,5 @@ frontend/.env
 
 backend/package-lock.json
 frontend/package-lock.json
+
+.mongodbData
