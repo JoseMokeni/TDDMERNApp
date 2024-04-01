@@ -7,6 +7,15 @@ import { useState, useEffect } from "react";
 function App() {
   // get tasks from the server
   const [tasks, setTasks] = useState([]);
+
+  const deleteTask = (taskId) => {
+    fetch(`http://localhost:5000/tasks/${taskId}`, {
+      method: "DELETE",
+    }).then(() => {
+      setTasks(tasks.filter((task) => task._id !== taskId));
+    });
+  };
+
   useEffect(() => {
     fetch("http://localhost:5000/tasks")
       .then((res) => res.json())
@@ -29,7 +38,7 @@ function App() {
             .then((data) => setTasks([...tasks, data]));
         }}
       />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} deleteTask={deleteTask} />
     </div>
   );
 }

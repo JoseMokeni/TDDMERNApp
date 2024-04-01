@@ -1,6 +1,10 @@
 import React from "react";
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, deleteTask }) => {
+  const handleDelete = (e) => {
+    // delete task
+    deleteTask(e.target.id);
+  };
   return (
     <ul className="mt-10">
       {tasks.length === 0 ? (
@@ -12,7 +16,13 @@ const TaskList = ({ tasks }) => {
             className="flex justify-between items-center border-b border-gray-400 py-2"
           >
             <span>{task.title}</span>
-            <button className="text-red-500">Delete</button>
+            <button
+              className="text-red-500"
+              onClick={handleDelete}
+              id={task._id}
+            >
+              Delete
+            </button>
           </li>
         ))
       )}
