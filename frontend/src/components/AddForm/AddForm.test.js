@@ -1,4 +1,5 @@
 import AddForm from "./AddForm";
+import TaskList from "../TaskList/TaskList";
 import { render, screen } from "@testing-library/react";
 
 it("should have a form element", () => {
@@ -13,8 +14,9 @@ it("should have an input with 'Add a task' placeholder", () => {
   expect(inputElement).toBeInTheDocument();
 });
 
-it("should have a button with 'Add' text", () => {
+it("should have a submit button with 'Add' text", () => {
   render(<AddForm />);
   const buttonElement = screen.getByText("Add");
   expect(buttonElement).toBeInTheDocument();
 });
+
