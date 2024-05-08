@@ -23,8 +23,12 @@ To run the app, follow these steps:
 
 To run the tests for the app, you can use the following command:
 
+    ```bash
     docker-compose exec server npm test
+    ```
 
 This command will run the tests for the server-side code. You can also run the tests for the client-side code by using the following command:
 
+    ```bash
     docker-compose exec client npm test
+    ```
